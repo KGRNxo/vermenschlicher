@@ -1,4 +1,4 @@
 interface:
-  display_name: "Humanizer"
-  short_description: "Make AI-written text sound like the writer"
-  default_prompt: "Use $humanizer to rewrite this text in my voice without changing its facts."
+  display_name: "Vermenschlicher"
+  short_description: "Natürliches Deutsch statt KI-Floskeln"
+  default_prompt: "Nutze $vermenschlicher und überarbeite diesen Text auf natürliches Deutsch, ohne Fakten oder Aussagen zu verändern."

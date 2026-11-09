@@ -1,12 +1,18 @@
 {
-  "name": "humanizer",
-  "description": "Rewrite AI-sounding text so it reads like the writer without changing what it says.",
-  "version": "3.1.0",
+  "name": "vermenschlicher",
+  "description": "Überarbeite deutschsprachige Texte so, dass sie natürlich und zur schreibenden Person passend klingen, ohne den Inhalt zu verfälschen.",
+  "version": "1.0.0",
   "author": {
-    "name": "blader"
+    "name": "KGRNxo"
   },
-  "homepage": "https://github.com/blader/humanizer",
-  "repository": "https://github.com/blader/humanizer",
+  "homepage": "https://github.com/KGRNxo/vermenschlicher",
+  "repository": "https://github.com/KGRNxo/vermenschlicher",
   "license": "MIT",
-  "keywords": ["writing", "editing", "humanize", "prose", "style"]
+  "keywords": [
+    "writing",
+    "editing",
+    "german",
+    "deutsch",
+    "sprachstil"
+  ]
 }

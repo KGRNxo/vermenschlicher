@@ -1,44 +1,44 @@
-name: Rewrite problem
-description: A rewrite kept a tell, changed the meaning, added a fact, or over-edited.
+name: Problem bei der Überarbeitung
+description: Ein Muster ist stehen geblieben, die Bedeutung hat sich verändert oder der Text wurde zu stark bearbeitet.
 labels: ["bug"]
 body:
   - type: dropdown
     id: problem
     attributes:
-      label: What went wrong
+      label: Was ist passiert?
       options:
-        - A tell survived the rewrite
-        - The rewrite added or dropped a fact
-        - The rewrite changed text that was fine
-        - Something else
+        - Ein unnatürliches Muster ist geblieben
+        - Ein Fakt wurde hinzugefügt oder ging verloren
+        - Eine gute Formulierung wurde unnötig verändert
+        - Anderes Problem
     validations:
       required: true
   - type: textarea
     id: input
     attributes:
-      label: Input text
-      description: The text you gave Humanizer. Remove anything private.
+      label: Ausgangstext
+      description: Entferne vertrauliche Informationen.
     validations:
       required: true
   - type: textarea
     id: call
     attributes:
-      label: How you called it
-      description: The agent and model you used, and your exact prompt.
-      placeholder: "Claude Code, Opus 5.5: /humanizer then pasted the text"
+      label: Aufruf
+      description: Verwendeter Agent, Modell und genauer Auftrag.
+      placeholder: "Claude Code, verwendetes Modell, /vermenschlicher:vermenschlicher"
     validations:
       required: true
   - type: textarea
     id: output
     attributes:
-      label: Output
-      description: What Humanizer returned.
+      label: Ergebnis
+      description: Der ausgegebene Text.
     validations:
       required: true
   - type: textarea
     id: expected
     attributes:
-      label: What it should have done
-      description: Quote the sentence that is wrong and say what a careful writer would write. Name the pattern number if you know it.
+      label: Erwartetes Ergebnis
+      description: Nenne die fehlerhafte Stelle und eine bessere deutsche Formulierung. Wenn bekannt, die Musternummer angeben.
     validations:
       required: true

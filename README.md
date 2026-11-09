@@ -1,209 +1,213 @@
-# Humanizer 
+# Vermenschlicher
 
-sponsored by [cfo.ai](https://cfo.ai)
+**Vermenschlicher** überarbeitet deutschsprachige Texte, die künstlich, austauschbar oder unnötig kompliziert klingen. Der Skill bewahrt die Aussage und passt den Stil an den ursprünglichen Autor, die Zielgruppe und die Textart an.
 
-[![GitHub stars](https://img.shields.io/github/stars/blader/humanizer?style=flat)](https://github.com/blader/humanizer/stargazers) [![skills.sh installs](https://skills.sh/b/blader/humanizer)](https://skills.sh/blader/humanizer) 
+Er basiert auf [Humanizer 3.1.0 von blader](https://github.com/blader/humanizer), übernimmt dessen **26 Prüfmuster vollständig in deutscher Bearbeitung** und ergänzt sie um Regeln für natürliche deutsche Sprache, App-Texte, Marketing, Dokumentation und persönliche Nachrichten. Das Projekt ist unter der MIT-Lizenz veröffentlicht.
 
+### Beispiel
 
-Humanizer makes AI-written text sound like a person wrote it, without changing what it says. It is built on Wikipedia's [Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing), the guide Wikipedia editors use to catch AI-generated text, and it works in Claude Code, Codex, and any other agent that supports skills.
+**Vorher**
 
-**Before:**
-> I'm thrilled to announce that shared drafts are finally here! 🚀 For months, our own team was drowning in files named final_v7.docx — and we knew there had to be a better way. Now two people can edit the same doc at once, with every change appearing live for both of them. It's not just a feature; it's a whole new way to collaborate. Comments stay anchored to the exact sentence they reference, even as the text around them evolves. And the best part? It's available today on every plan, completely free. Let that sink in.
+> Wir freuen uns riesig, dir ein revolutionäres Lernerlebnis präsentieren zu dürfen! Unsere innovative Plattform hebt deine Vorbereitung auf ein völlig neues Level. Mehr als nur eine App. Dein perfekter Begleiter. Schnell. Einfach. Intuitiv. Und das Beste daran? Du bestimmst deinen Erfolg!
 
-**After:**
-> Shared drafts are out today. For months our own team passed around files named final_v7.docx, so we built a way for two people to edit the same doc at once, with each person's changes showing up live for the other. Comments stay pinned to the sentence they're about, even when the text around them changes. It's free on every plan.
+**Nachher**
 
-In a blind test, judges preferred Humanizer's rewrite over the original AI text 16 times out of 16 ([#229](https://github.com/blader/humanizer/issues/229)).
+> Mit der App kannst du Aufgaben zu einzelnen Themen üben und deinen Lernstand verfolgen. So erkennst du, welche Inhalte du noch einmal wiederholen solltest.
 
-Humanizer edits for human readers. Getting past AI detectors is not a goal, and detectors still flag most of its output.
-
-## The five strongest tells
-
-These are the most common signs of AI writing, and Humanizer rewrites any of them on sight:
-
-1. **Not X but Y:** "It's not just a feature, it's a shift."
-2. **One-line closers:** "Let that sink in."
-3. **Sayings that sound deep:** "At its core, what really matters is..."
-4. **A staged run-up:** "Here's the thing." "Honestly?"
-5. **Arguing with no one:** "I'm not saying X, but..."
-
-Humanizer checks for [26 patterns](#the-26-patterns) in all.
+Das Beispiel zeigt eine stilistische Überarbeitung. Funktionen dürfen nur erwähnt werden, wenn sie beim tatsächlichen Produkt vorhanden sind.
 
 ## Installation
 
-Once installed, the skill answers to `/humanizer`.
-
-### Claude Code
-
-```text
-/plugin marketplace add blader/humanizer
-/plugin install humanizer@humanizer
-```
-
-The plugin answers to `/humanizer:humanizer`. It needs Claude Code 2.1.142 or newer; on older versions, use `npx skills add blader/humanizer --global --agent claude-code`.
+Vermenschlicher ist ein Agent-Skill: Er liefert Anweisungen zur Textbearbeitung und enthält keinen eigenen KI-Dienst. Er läuft mit einem kompatiblen Agenten.
 
 ### Codex
 
-```bash
-npx skills add blader/humanizer --global --agent codex
-```
+~~~bash
+npx skills add KGRNxo/vermenschlicher --global --agent codex
+~~~
 
-### Claude.ai and Claude Desktop
+Nach der Installation den Agenten bei Bedarf neu starten und beispielsweise schreiben:
 
-Download this repository as a ZIP (**Code → Download ZIP**) and upload it as a skill in Settings.
+~~~text
+Verwende $vermenschlicher und überarbeite diesen Text auf natürliches Deutsch:
+[Text einfügen]
+~~~
 
-### Other agents
+### Claude Code als Plugin
 
-```bash
-npx skills add blader/humanizer --global --agent '*'
-```
+Im interaktiven Claude-Code-Fenster:
 
-This installs Humanizer for every agent the Skills CLI supports, including Gemini CLI, GitHub Copilot, and Windsurf. Leave off `--global` in any command above to install it only in the current project. For an agent the Skills CLI does not know, copy `SKILL.md` into its skill folder.
+~~~text
+/plugin marketplace add KGRNxo/vermenschlicher
+/plugin install vermenschlicher@vermenschlicher
+~~~
 
-## Usage
+Danach:
 
-Call the skill directly:
+~~~text
+/vermenschlicher:vermenschlicher
+[Text einfügen]
+~~~
 
-```
-/humanizer
+Alternativ als Skill über die Skills-CLI:
 
-[paste your text here]
-```
+~~~bash
+npx skills add KGRNxo/vermenschlicher --global --agent claude-code
+~~~
 
-Or ask in plain language:
+Je nach Installationsweg und Agenten-Version kann die Aufrufsyntax abweichen. Über einen normalen Textauftrag lässt sich der Skill ebenfalls verwenden.
 
-```
-Please humanize this text: [your text]
-```
+### Weitere Agenten
 
-To rewrite a file, give Humanizer its path:
+~~~bash
+npx skills add KGRNxo/vermenschlicher --global --agent '*'
+~~~
 
-```
-Humanize the prose in docs/launch-post.md
-```
+Ohne „--global“ erfolgt die Installation projektbezogen. Für Agenten ohne Skills-CLI kann die Datei „SKILL.md“ in das vorgesehene Skill-Verzeichnis kopiert werden.
 
-### Match your voice
+## Verwendung
 
-If you want the rewrite to sound more like you, include a sample:
+**Einen Text überarbeiten**
 
-```
-/humanizer
+~~~text
+Nutze Vermenschlicher. Bewahre alle Fakten und den fachlichen Inhalt:
+[Text]
+~~~
 
-Here's a sample of my writing for voice matching:
-[paste 2-3 paragraphs of your own writing]
+**Den eigenen Stil übernehmen**
 
-Now humanize this text:
-[paste AI text to humanize]
-```
+~~~text
+Nutze Vermenschlicher und orientiere dich an dieser Schreibprobe:
+[Zwei bis drei eigene Absätze]
 
-Humanizer follows the sample's rhythm, word choice, punctuation, and deliberate quirks, including dashes if you use them.
+Überarbeite anschließend diesen Text:
+[Text]
+~~~
 
-## How it works
+**Eine Datei bearbeiten**
 
-A language model writes whatever is most likely to come next, so by default it makes the choice that fits the widest range of readers and subjects. A person chooses for one reader and one subject. Every tell Humanizer looks for is a form of that default choice: a sentence that signals importance instead of adding a fact, rhythm or formatting applied by rule, an ordinary fact dressed as a pivotal one, text left over from the chat, or a reply that re-explains what the reader already knows.
+~~~text
+Nutze Vermenschlicher für die Prosa in docs/website.md.
+Lass Code, Dateipfade, Links, technische Werte und Daten unverändert.
+~~~
 
-> "LLMs use statistical algorithms to guess what should come next. The result tends toward the most statistically likely result that applies to the widest variety of cases."
-> Wikipedia, ["Signs of AI writing"](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing)
+**Schon beim Schreiben anwenden**
 
-Humanizer marks every tell it finds, strongest first. It drafts a rewrite without treating the original structure as fixed, checks the draft against the patterns and the original claims, and then writes the final version. It does not make things up. A name, number, date, quote, citation, or other factual detail must come from the source or the writer, and if a sentence needs a detail that is missing, Humanizer asks instead of inventing one.
+~~~text
+Verwende Vermenschlicher beim Schreiben unserer deutschen Website-Texte.
+Schreibe konkret und natürlich. Erfinde keine Produkteigenschaften.
+~~~
 
-When you paste text, Humanizer shows its work: the first rewrite, a short critique of anything that still sounds artificial, and the final version. Point it at a file and it changes only the prose, leaving code, data, frontmatter, and link targets alone. Personal writing keeps the writer's opinions and quirks. Technical and reference prose stays neutral and plain.
+## Was Vermenschlicher besonders berücksichtigt
 
-## The 26 patterns
+- Natürliches Deutsch statt wortwörtlich übernommener englischer Stilregeln
+- Keine künstlichen Gegensätze oder bedeutungslosen Schlagwortreihen
+- Keine standardisierten Schlusspointen, Verkaufsfloskeln oder Chatbot-Grüße
+- Deutsche Komposita, Rechtschreibung und Zeichensetzung
+- Die individuelle Stimme des Autors statt künstlicher Umgangssprache
+- Sorgfältiger Umgang mit Zahlen, Zitaten, Fachbegriffen und Unsicherheiten
+- Unterschiedliche Anforderungen an Marketing, App-Oberflächen, Fachtexte und private Nachrichten
 
-The patterns are numbered by strength and frequency. The first five justify an edit on a single sighting. Patterns marked *weak alone* count only when several tells share a passage, because a careful writer may use any one of them on purpose.
+## Die fünf auffälligsten Muster
 
-### A. Staging instead of stating
+1. „Es geht nicht nur um X, sondern um Y“, obwohl niemand X behauptet hat
+2. Einzelne Schlusssätze, die bloß das Vorherige wiederholen
+3. Große Wahrheiten ohne konkrete Aussage
+4. Einleitungen, die nur das eigentliche Thema ankündigen
+5. Verteidigungen gegen Einwände, die im Text gar nicht vorkommen
 
-| # | Pattern | Before | After |
-|---|---------|--------|-------|
-| 1 | **Not X but Y** | "It's not just X, it's Y", "This doesn't mean X. It means Y." | State the point directly |
-| 2 | **One-line closers and dramatic fragments** | "That is the real win." after every section; "This shows the importance of..." after an example; "No prior. No nostalgia." | Cut the closer that repeats or explains the example; merge fragments into a specific claim |
-| 3 | **Sayings that sound deep** | "At its core, what matters is...", "Symmetry is the language of trust" | Replace the saying with the specific claim |
-| 4 | **Staged run-up before the point** | "Let's dive in", "Honestly? It depends..." | Remove the run-up and state the point |
-| 5 | **Arguing with no one** | "This isn't mainly about...", "A tempting approach would be..." | Remove the unraised objection or fake option; keep any real claim |
+## Die 26 Prüfmuster
 
-### B. Rhythm by rule
+Alle 26 Muster des Originals sind übernommen. Die Reihenfolge und Nummerierung wurden beibehalten, damit Verweise nachvollziehbar bleiben. Erläuterungen und Beispiele sind an das Deutsche angepasst.
 
-| # | Pattern | Before | After |
-|---|---------|--------|-------|
-| 6 | **Forced triads** | "innovation, inspiration, and insights"; three examples plus a lesson | Use the number of items the meaning needs |
-| 7 | **Repeated sentence openings** | "She noted... She noted... She filed..." | Merge the sentences or change the subject |
-| 8 | **Dashes as the universal connector** (*weak alone*) | "institutions—not the people—yet this continues—" | Use periods, commas, colons, or parentheses; match a sample that uses dashes |
-| 9 | **Stacked qualifiers** (*weak alone*) | "could potentially possibly be argued" | Keep only qualifiers the source supports |
-| 10 | **Hyphenated pairs everywhere** (*weak alone*) | "the report is high-quality" | Keep the hyphen before the noun or where the dictionary has one |
-| 11 | **Passive voice and missing subjects** (*weak alone*) | "No configuration file needed" | Name the actor when that helps |
+### A. Inszenierung statt Aussage
 
-### C. Inflation and borrowed authority
+| Nr. | Muster | Worum es geht |
+| --- | --- | --- |
+| 1 | **Künstlicher Gegensatz: „Nicht X, sondern Y“** | Künstliche Gegensätze durch direkte Aussagen ersetzen |
+| 2 | **Wiederholende Schlusssätze und dramatische Satzfragmente** | Leere Pointen und künstlich isolierte Sätze streichen |
+| 3 | **Pseudotiefe und bedeutungsvolle Allgemeinplätze** | Abstrakte Lebensweisheiten konkretisieren |
+| 4 | **Angekündigte Einleitungen** | Sofort mit der Information beginnen |
+| 5 | **Einwände, die niemand erhoben hat** | Unnötige Verteidigungen entfernen |
 
-| # | Pattern | Before | After |
-|---|---------|--------|-------|
-| 12 | **Overused AI words** | "delve... testament... landscape... showcasing" | Use plain words |
-| 13 | **Inflated significance** | "marking a pivotal moment", "Despite challenges... continues to thrive", "The future looks bright" | Keep the fact and drop the significance; end on the last concrete fact |
-| 14 | **Vague connection or association** | "associated with the leadership of", "in connection with" | State the relationship the source gives |
-| 15 | **Shallow -ing riders** | "symbolizing... reflecting... showcasing..." | Keep only what the source supports |
-| 16 | **Sales language** | "nestled within the breathtaking region" | State what the thing is |
-| 17 | **Borrowed authority** | "Experts believe...", "cited in NYT, BBC, FT, and The Hindu" | Name a real source and what it said, or remove the claim or list |
-| 18 | **Avoiding is, are, and has** | "serves as... features... boasts" | "is... has" |
+### B. Mechanischer Rhythmus
 
-### D. Formatting by rule
+| Nr. | Muster | Worum es geht |
+| --- | --- | --- |
+| 6 | **Erzwungene Dreiergruppen** | Nur die tatsächlich erforderlichen Punkte nennen |
+| 7 | **Gleichförmige Satzanfänge** | Satzbau nach Inhalt statt nach Schema wählen |
+| 8 | **Gedankenstriche als universelles Bindemittel** | Gedankliche Zusammenhänge passend formulieren |
+| 9 | **Gestapelte Unsicherheitsmarker** | Doppelungen kürzen, echte Vorbehalte bewahren |
+| 10 | **Mechanische Bindestrichverbindungen** | Deutsche Komposita korrekt schreiben |
+| 11 | **Unnötiges Passiv und fehlende Handelnde** | Handelnde und Vorgänge klar benennen |
 
-| # | Pattern | Before | After |
-|---|---------|--------|-------|
-| 19 | **Bold as decoration** | "**OKRs**, **KPIs**"; "**Performance:** Performance improved" | Remove the bold; turn a labeled list into prose |
-| 20 | **Decorative headings** | "Strategic Negotiations And Partnerships", "🚀 Launch Phase:", "The decision, on one screen" | Sentence case; remove emojis and arrows; name what the section holds |
-| 21 | **Curly quotation marks** (*weak alone*) | `said “the project”` | `said "the project"` |
+### C. Aufgeblasene Bedeutung und geliehene Autorität
 
-### E. Leftovers from the chat and the draft
+| Nr. | Muster | Worum es geht |
+| --- | --- | --- |
+| 12 | **Überstrapazierte KI-Wörter** | Konkrete Wörter statt aufgeblähter Formeln |
+| 13 | **Übertriebene historische oder persönliche Bedeutung** | Bedeutung nur dort behaupten, wo sie belegt ist |
+| 14 | **Unklare Beziehungen** | Tatsächliche Beziehungen konkret nennen |
+| 15 | **Angehängte Scheinfolgerungen** | Unbelegte Deutungen aus Nebensätzen entfernen |
+| 16 | **Aufdringliche Werbesprache** | Eigenschaften statt leerer Superlative nennen |
+| 17 | **Geliehene Autorität** | Quellen konkret angeben oder Behauptungen streichen |
+| 18 | **Vermeidung einfacher Verben** | Unnötige Umschreibungen durch klare Verben ersetzen |
 
-| # | Pattern | Before | After |
-|---|---------|--------|-------|
-| 22 | **Chatbot residue** | "Great question! ... I hope this helps!" | Remove the wrapper and keep the content |
-| 23 | **Knowledge-limit disclaimers and guesses** | "While details are limited in available sources, it appears..." | State what the source shows, or remove the sentence |
-| 24 | **A heading repeated in the first sentence** | "## Performance" + "Speed matters." | Let the heading do the work |
-| 25 | **Writing about the document instead of its subject** | "This function was added to replace...", "compiled from...", "The table below compares..." | Describe the subject; state a convention only when the reader cannot see it |
+### D. Mechanische Formatierung
 
-### F. Writing for the wrong reader
+| Nr. | Muster | Worum es geht |
+| --- | --- | --- |
+| 19 | **Fettdruck als Dekoration** | Hervorhebungen gezielt einsetzen |
+| 20 | **Dekorative Überschriften** | Überschriften sollen ihren Inhalt beschreiben |
+| 21 | **Unpassende Anführungszeichen** | Deutsche Typografie und Zielformat beachten |
 
-| # | Pattern | Before | After |
-|---|---------|--------|-------|
-| 26 | **Re-explaining what the reader knows** | A reply that walks the diagnosis and proves the plan works before the decision | Lead with the decision; leave the diagnosis and the proof for the ticket that follows |
+### E. Reste aus Chat und Entwurf
 
-## Full example
+| Nr. | Muster | Worum es geht |
+| --- | --- | --- |
+| 22 | **Chatbot-Reste** | Chat-Floskeln aus eigenständigen Texten entfernen |
+| 23 | **Wissensgrenzen als Textfüllung und erfundene Vermutungen** | Fehlende Fakten nicht durch Spekulationen ersetzen |
+| 24 | **Wiederholung der Überschrift im ersten Satz** | Inhaltliche Doppelungen streichen |
+| 25 | **Schreiben über den Text statt über die Sache** | Gegenstand beschreiben, nicht den Schreibprozess |
 
-**Before (AI-sounding):**
-> I recently spent five unforgettable days in Lisbon last October, and let me tell you — this city completely stole my heart. From the moment I checked into my charming hotel perched high in the historic Alfama district, I knew I was somewhere truly special.
->
-> Yes, the famous hills are challenging — with countless stairs between my hotel and everything else, my legs certainly felt it! — but every climb rewards you with breathtaking, panoramic views that make it all worthwhile.
->
-> No trip would be complete without riding the iconic Tram 28, a roughly forty-minute journey shared with plenty of fellow travelers eager to capture the magic. And the food? Simply divine. While the pastéis de nata at Pastéis de Belém are a beloved national treasure, my absolute favorite came from a hidden gem in Graça, still warm from the oven.
->
-> But what truly makes Lisbon special isn't just the sights — it's the feeling. Wander just a block or two above the main squares and you'll discover a quieter, more authentic side of the city, inviting you to slow down and savor every moment.
->
-> Of course, the must-see São Jorge Castle offers stunning views over the rooftops below. The queues can be long, but the experience is absolutely worth it for any history buff or curious traveler.
->
-> Would I go back? Absolutely — next time in spring, and with better shoes! Lisbon isn't just a place to visit; it's a place to fall in love with, again and again. ✨
+### F. Am Leser vorbeigeschrieben
 
-**After:**
-> I spent five days in Lisbon last October. My hotel was up in Alfama, with a lot of stairs between it and everything else, and my legs felt every one of them. The views from the top were worth the climb.
->
-> Everyone tells you to ride Tram 28, so I did. The trip took about forty minutes, and most of the car was other tourists taking pictures out the windows. The custard tarts at Pastéis de Belém are the famous ones, but my favorite came from a place in Graça, still warm from the oven.
->
-> The part of Lisbon I liked best starts a block or two above the main squares, where the streets go quiet and nobody is in a hurry. São Jorge Castle has good views over the rooftops and a long queue to get them.
->
-> I'd go back, in spring next time, and with better shoes.
+| Nr. | Muster | Worum es geht |
+| --- | --- | --- |
+| 26 | **Bekanntes unnötig erneut erklären** | Bereits bekannten Kontext nicht erneut ausbreiten |
 
-## Sources
+## Zusätzliche deutsche Stilregeln
 
-- [Wikipedia: Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) is the source for the pattern list.
-- [WikiProject AI Cleanup](https://en.wikipedia.org/wiki/Wikipedia:WikiProject_AI_Cleanup) maintains the page.
+Vermenschlicher ergänzt diese 26 Muster um zusätzliche Regeln für deutsche KI-Formulierungen, Textfluss und glaubwürdige Tonalität.
 
-## Version history
+**Zu vermeiden, wenn es nur Füllung ist:** „Hier kommt X ins Spiel“, „Die eigentliche Frage lautet“, „Das Beste daran?“, „Eine neue Ära“, „Auf ein neues Level heben“, „Dein perfekter Begleiter“, „Alles, was du brauchst“.
 
-See [CHANGELOG.md](CHANGELOG.md).
+**Ebenfalls auffällig:** „Einfach. Schnell. Verständlich.“ oder „Keine Ablenkung. Keine Umwege. Nur Ergebnisse.“ Solche Sätze erzeugen einen künstlichen Rhythmus und sagen meist wenig über den konkreten Gegenstand aus.
 
-## License
+Der Skill verhindert auch das gegenteilige Extrem: Er erzeugt keine absichtlichen Fehler, erzwungene Umgangssprache oder willkürlichen Einschübe, nur um künstlich „menschlich“ zu wirken.
 
-MIT
+Alle Regeln und Ausnahmen stehen vollständig in [SKILL.md](SKILL.md).
 
-If Humanizer helps you, a star helps other people find it.
+## Grenzen
+
+- Ein sprachliches Merkmal beweist keine KI-Autorenschaft.
+- Auch menschliche Autoren verwenden einzelne der genannten Formulierungen bewusst.
+- Ziel ist bessere Lesbarkeit und ein passender Schreibstil, **nicht das Umgehen von KI-Detektoren**.
+- Das Ergebnis kann Fakten nur dann korrekt bewahren, wenn der Ausgangstext sie enthält. Bei Recht, Medizin, Finanzen und Technik haben Genauigkeit und notwendige Einschränkungen Vorrang.
+- Ein Agent verarbeitet die Regeln mit seinem eigenen Sprachmodell. Die Qualität hängt deshalb auch vom Modell, der Schreibprobe und dem Ausgangstext ab.
+
+## Entwicklung und Prüfung
+
+Die zentrale Skill-Datei liegt im Repository-Hauptverzeichnis. Der Validator prüft Metadaten, Versionsnummern, 26 Muster und die Übereinstimmung zwischen README und Skill:
+
+~~~bash
+python3 scripts/validate-package.py
+~~~
+
+Die übrigen Dateien enthalten Plugin-Metadaten, Hilfstexte und Vorlagen. Für Änderungen an Formulierungsregeln ist „SKILL.md“ maßgeblich. Details stehen in [AGENTS.md](AGENTS.md).
+
+## Herkunft und Lizenz
+
+**Vermenschlicher** ist eine deutsche Weiterentwicklung von [Humanizer](https://github.com/blader/humanizer) von blader, Ausgangsversion 3.1.0. Die 26 Prüfmuster des Originals beruhen unter anderem auf [„Signs of AI writing“](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) aus Wikipedia und dem WikiProject AI Cleanup.
+
+Die ursprüngliche MIT-Lizenz einschließlich Copyright-Hinweis bleibt in [LICENSE](LICENSE) erhalten. Diese Fassung enthält zusätzlich eigenständig formulierte deutsche Beispiele und Regeln. Sie ist kein offizielles deutschsprachiges Release des Originalprojekts.
