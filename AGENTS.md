@@ -39,3 +39,12 @@ Wenn externe Werkzeuge fehlen, diese Prüfungen als nicht ausgeführt kennzeichn
 ## Stil
 
 Konkrete Aussagen zuerst. Keine künstlichen Kurzsätze, Anglizismen ohne Grund, bedeutungsschweren Übergänge, übertriebene Werbesprache oder routinemäßigen Anschlussfragen. Der fachliche Inhalt hat Vorrang vor stilistischen Eingriffen.
+
+<!-- claude-efficiency-stack-v1 -->
+## Token Optimizer, Context Mode und Ponytail
+
+- Nur nachweislich verfügbare Plugins, Hooks, Skills und MCP-Tools nutzen; Markdown-Dateien installieren oder aktivieren nichts.
+- In Claude Code **Token Optimizer** für Verbrauchsanalyse, Wiederholungserkennung und Kontextkontinuität, **Context Mode** für umfangreiche Werkzeugausgaben und gezielte Suche, **Ponytail `full`** für die kleinste vollständige, wartbare Lösung einsetzen, sofern verfügbar.
+- Doppelte Komprimierung vermeiden. Überlappungen nur nach Prüfung der installierten Plugin-Version in der lokalen Benutzerkonfiguration abstimmen (`TOKEN_OPTIMIZER_BASH_COMPRESS=0`, `TOKEN_OPTIMIZER_READ_CACHE_DELTA=0`, `TOKEN_OPTIMIZER_READ_CACHE_MODE=shadow`). Keine Rechnerkonfiguration oder Secrets committen.
+- Originalfehler, Exit-Codes, Zeilenangaben, Testergebnisse und Quellen abrufbar halten. Keine Tests abschwächen oder grundlos wiederholen. Korrektheit, Sicherheit, Datenschutz, Accessibility und Projektanforderungen gehen vor Einsparung. Nur nachgewiesene Einsparung als gemessen darstellen; fehlende Plugins nicht behaupten oder ungefragt installieren.
+<!-- /claude-efficiency-stack-v1 -->
